@@ -15,7 +15,7 @@ class Tag {
 	toString() {
 		const tagConfig = TAG_LIST[this.name];
 		if (!tagConfig) {
-			throw new Error("Tag doesn\'t exist!");
+			throw new Error("Tag doesn't exist!");
 		}
 		return ( tagConfig.isPaired ?
 			`<${this.name}${this.parsedParamLine}>${this.inner}</${this.name}>` :
