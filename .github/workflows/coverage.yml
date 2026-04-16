@@ -1,0 +1,21 @@
+name: Coverage
+on:
+  push:
+    branches:
+      - main
+      - 'feat/initial-logic'
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install & Test
+        run: |
+          npm install
+          npm run coverage
+      - name: Update Badge Gist
+        uses: wjervis7/vitest-badge-action@main
+        with:
+          gist-token: ${{ secrets.GIST_TOKEN }}
+          gist-url: https://gist.github.com/andyfrl/dacc87f8304d552a0e898e1688431a3d
+          result-type: lines

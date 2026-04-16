@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
-      - master
-      - feat/initial-logic
+      - 'feat/initial-logic'
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+      - 'feat/initial-logic'
 
 jobs:
   lint:
@@ -15,17 +16,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
           cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
       - name: Run Lint
-        # You can use your Makefile or npm script here
-        run: make lint 
+        run: |
+          make lint
+          make test
