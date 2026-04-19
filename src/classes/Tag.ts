@@ -9,14 +9,12 @@ class Tag {
 
 	deconstructObject(params: TagParams): string {
 		return Object.entries(params)
-			.map(([key, value]) => ` ${key}=${value}`)
+			.map(([key, value]) => ` ${key}="${value}"`)
 			.join("");
 	}
 	toString() {
 		const tagConfig = TAG_LIST[this.name];
-		if (!tagConfig) {
-			throw new Error("Tag doesn't exist!");
-		}
+		
 		return ( tagConfig.isPaired ?
 			`<${this.name}${this.parsedParamLine}>${this.inner}</${this.name}>` :
 			`<${this.name}${this.parsedParamLine}>`

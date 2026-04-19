@@ -4,6 +4,8 @@ install:
 develop:
 	npm run start:dev
 
+.PHONY: build
+
 build:
 	npm run build
 
@@ -15,3 +17,8 @@ test:
 
 lint:
 	npm run lint
+
+.PHONY: coverage
+
+coverage:
+	npm run coverage
