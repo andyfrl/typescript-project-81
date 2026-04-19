@@ -5,7 +5,7 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, '**/dist/**'],
     
     include: ['__tests__/**/*.{test,spec}.ts'],
-
+	environment: 'jsdom',
 	coverage: {
       provider: 'v8',
 	  clean: true,
