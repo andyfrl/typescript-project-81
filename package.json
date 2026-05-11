@@ -4,6 +4,9 @@
   "description": "TS form generator",
   "type": "module",
   "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "scripts": {
     "test": "vitest run",
     "coverage": "vitest run --coverage",
