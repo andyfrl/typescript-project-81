@@ -9,7 +9,7 @@ export default defineConfig({
 	environment: 'jsdom',
 
   alias: {
-    '@hexlet/code': path.resolve(__dirname, './src/index.ts')
+    '@hexlet/code': path.resolve(__dirname, 'code/src/index.ts'),
   },
 	coverage: {
       provider: 'v8',
