@@ -1,4 +1,5 @@
 import { defineConfig, configDefaults } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
   test: {
@@ -6,6 +7,10 @@ export default defineConfig({
     
     include: ['__tests__/**/*.{test,spec}.ts'],
 	environment: 'jsdom',
+
+  alias: {
+    '@hexlet/code': path.resolve(__dirname, './src/index.ts')
+  },
 	coverage: {
       provider: 'v8',
 	  clean: true,
