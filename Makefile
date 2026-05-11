@@ -13,7 +13,6 @@ start:
 	npm run start
 
 test:
-	npm run build
 	npm run test
 
 lint:

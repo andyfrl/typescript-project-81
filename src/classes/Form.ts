@@ -30,7 +30,7 @@ class Form extends Tag<'form'> {
 	}
 
 	private static readonly DEFAULTS: Partial<TagFieldMap> = {
-		form: { action: '#', method: 'POST' },
+		form: { method: 'post', action: '#' },
 		input: { type: 'text' },
 		textarea: { cols: 20, rows: 40 }
 	};
@@ -57,7 +57,7 @@ class Form extends Tag<'form'> {
 			name: name } as Record<string, HTMLPrimitive>;
 		
 		this.children = this.children.concat(labelTag.toString());
-		this.children = this.children.concat(new Tag(tagName, mergedProps).toString());
+		this.children = this.children.concat(new Tag(tagName, mergedProps, this.data[name]).toString());
 	}
 
 	submit(caption: string): void {
