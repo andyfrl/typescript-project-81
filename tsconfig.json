@@ -2,7 +2,7 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./",
+    "rootDir": "./src",
     "outDir": "./dist",
 
     // Environment Settings
@@ -47,6 +47,8 @@
     "dist",
     "eslint.config.ts",
     "vitest.config.ts",
-    "tsconfig.json"
+    "tsconfig.json",
+    "**/__tests__/*",
+    "**/*.test.ts"
   ],
 }
