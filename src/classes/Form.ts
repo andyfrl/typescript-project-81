@@ -1,26 +1,71 @@
-import type { FormTemplateParams, FormSubmissionCallback } from "../types/formTypes.js";
-class Form {
-	private template: FormTemplateParams;
-	private submitUrl: string;
-	private submissionHandler: FormSubmissionCallback;
+import type { HTMLPrimitive } from "../types/formTypes.js";
+import { Tag } from "./Tag.js";
+import { type TagFieldMap, type TagFieldType, type Partial } from "../types/tagTypes.js";
+import { type FormContentCallback } from "../types/formTypes.js";
 
-	private constructor(template: FormTemplateParams,
-						urlObj: { url?: string },
-						submissionHandler: FormSubmissionCallback) {
-		this.template = template;
-		this.submitUrl = urlObj.url ?? '#';
-		this.submissionHandler = submissionHandler;
+class Form extends Tag<'form'> {
+	private data: Record<string, string>;
+
+	private constructor(template: Record<string, string>,
+						formOptions: TagFieldMap['form']) {
+		super('form', formOptions);
+		this.data = template;
 	};
 
-	static formFor(template: FormTemplateParams,
-				   urlObj: { url?: string },
-				   submissionHandler: FormSubmissionCallback): HTMLFormElement {
-		const formInstance = new Form(template, urlObj, submissionHandler);
+	static formFor(template: Record<string, string>,
+				   formOptions: TagFieldMap['form'],
+				   f: FormContentCallback): string {
+		const { url, ...props } = formOptions;
+		const mergedProps = {
+			...Form.DEFAULTS['form'],
+			...props,
+			action: url ?? Form.DEFAULTS.form!.action,
+		} as TagFieldMap['form'];
 
-		const formHtml = document.createElement('form') as HTMLFormElement;
-		formHtml.action = formInstance.submitUrl;
-		formHtml.method = 'post';
-		return formHtml;
+		const formTemplate =  new Form(template, mergedProps);
+		
+		f(formTemplate);
+
+		return formTemplate.toString();
+	}
+
+	private static readonly DEFAULTS: Partial<TagFieldMap> = {
+		form: { action: '#', method: 'POST' },
+		input: { type: 'text' },
+		textarea: { cols: 20, rows: 40 }
+	};
+	
+	input(name: string): void;
+	input<T extends TagFieldType>(name: string, 
+		options: { as?: T } & TagFieldMap[T]): void;
+	input<T extends TagFieldType>(name: string, 
+		options?: { as?: T } & TagFieldMap[T]): void {
+
+		const { as, ...props } = options ?? ({} as { as?: T } & TagFieldMap[T]);
+		const tagName = (as || 'input') as T;
+		
+		if (this.data[name] === undefined) {
+			throw new Error(`Field '${name}' does not exist in the template.`);
+		}
+
+		const labelTag = new Tag('label', { for: name }, 
+			name.charAt(0).toUpperCase() + name.slice(1));
+
+		const mergedProps = {
+			...Form.DEFAULTS[tagName],
+			...props,
+			name: name } as Record<string, HTMLPrimitive>;
+		
+		this.children = this.children.concat(labelTag.toString());
+		this.children = this.children.concat(new Tag(tagName, mergedProps).toString());
+	}
+
+	submit(caption: string): void {
+		const buttonProps = {
+			type: 'submit',
+			value: caption
+		};
+		this.children = this.children.concat(new Tag('input', buttonProps).toString());
 	}
 	
 }

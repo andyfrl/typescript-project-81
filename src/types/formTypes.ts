@@ -1,7 +1,6 @@
-interface FormTemplateParams {
-	[key: string]: string | number;
-}
+import { Form } from "../classes/Form.js";
 
-type FormSubmissionCallback = (event: Event) => void;
+type HTMLPrimitive = string | number | boolean;
+type FormContentCallback = (f: Form) => void;
 
-export { type FormTemplateParams, type FormSubmissionCallback };
+export { type HTMLPrimitive, type FormContentCallback };
