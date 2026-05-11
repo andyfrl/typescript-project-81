@@ -6,11 +6,10 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, '**/dist/**'],
     
     include: ['__tests__/**/*.{test,spec}.ts'],
-	environment: 'jsdom',
 
-  alias: {
-    '@hexlet/code': path.resolve(__dirname, 'code/src/index.ts'),
-  },
+    alias: {
+      '@hexlet/code': path.resolve(__dirname, 'src/index.ts'),
+    },
 	coverage: {
       provider: 'v8',
 	  clean: true,
