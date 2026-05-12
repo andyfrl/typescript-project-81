@@ -31,7 +31,7 @@ class Form extends Tag<'form'> {
 
 	private static readonly DEFAULTS: Partial<TagFieldMap> = {
 		form: { method: 'post', action: '#' },
-		input: { type: 'text' },
+		input: { type: 'text', value: '' },
 		textarea: { cols: 20, rows: 40 }
 	};
 	
@@ -52,9 +52,11 @@ class Form extends Tag<'form'> {
 			name.charAt(0).toUpperCase() + name.slice(1));
 
 		const mergedProps = {
+			name: name,
 			...Form.DEFAULTS[tagName],
-			...props,
-			name: name } as Record<string, HTMLPrimitive>;
+			...props } as Record<string, HTMLPrimitive>;
+		
+		if (mergedProps['value'] !== undefined) mergedProps['value'] = this.data[name];
 		
 		this.children = this.children.concat(labelTag.toString());
 		this.children = this.children.concat(new Tag(tagName, mergedProps, this.data[name]).toString());

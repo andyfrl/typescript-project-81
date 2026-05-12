@@ -13,7 +13,7 @@ class Tag<T extends TagFieldType> {
 			.map(([key, value]) => ` ${key}="${value}"`)
 			.join("");
 	}
-	
+
 	toString() {
 		const tagConfig = TAG_LIST[this.type];
 
