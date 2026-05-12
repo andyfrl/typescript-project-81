@@ -22,3 +22,11 @@ jobs:
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
+      
+      - name: Upload Debug Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-results
+          path: .
+
