@@ -22,13 +22,3 @@ jobs:
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
-      
-      - name: Upload Everything (Including Hidden Tests)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: full-runner-state
-          path: |
-            /home/runner/work/_temp/
-            /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/
-
