@@ -44,7 +44,7 @@ class Form extends Tag<'form'> {
     options: { as?: T, label?: string, labelHtml?: object } & TagFieldMap[T]): void
   input<T extends TagFieldType>(name: string,
     options?: { as?: T, label?: string, labelHtml?: object } & TagFieldMap[T]): void {
-    const { label, labelHtml, as, ...props } = options ?? ({} as { as?: T, label?: string, labelHtml?: object } & TagFieldMap[T])
+    const { label, labelHtml, as, ...props } = options ?? {}
     const tagName = (as ?? 'input') as T
 
     if (this.data[name] === undefined) {
