@@ -31,32 +31,38 @@ class Form extends Tag<'form'> {
 
 	private static readonly DEFAULTS: Partial<TagFieldMap> = {
 		form: { method: 'post', action: '#' },
-		input: { type: 'text', value: '' },
-		textarea: { cols: 20, rows: 40 }
+		input: { name: '', type: 'text', value: '' },
+		textarea: { cols: 20, rows: 40, name: '' }
 	};
+
+	private capitalize(str: string): string {
+		return str.charAt(0).toUpperCase() + str.slice(1)
+	}
 	
 	input(name: string): void;
 	input<T extends TagFieldType>(name: string, 
-		options: { as?: T } & TagFieldMap[T]): void;
+		options: { as?: T,label?: string, labelHtml?: object } & TagFieldMap[T]): void;
 	input<T extends TagFieldType>(name: string, 
-		options?: { as?: T } & TagFieldMap[T]): void {
+		options?: { as?: T,label?: string, labelHtml?: object } & TagFieldMap[T]): void {
 
-		const { as, ...props } = options ?? ({} as { as?: T } & TagFieldMap[T]);
+		const { label, labelHtml, as, ...props } = options ?? ({} as { as?: T, label?: string, labelHtml?: object } & TagFieldMap[T]);
 		const tagName = (as || 'input') as T;
 		
 		if (this.data[name] === undefined) {
 			throw new Error(`Field '${name}' does not exist in the template.`);
 		}
 
-		const labelTag = new Tag('label', { for: name }, 
-			name.charAt(0).toUpperCase() + name.slice(1));
+		const text = label !== undefined ? label : this.capitalize(name);
+		const labelAttrs = { for: name, ...labelHtml };
+
+		const labelTag = new Tag('label', labelAttrs, text);
 
 		const mergedProps = {
-			name: name,
 			...Form.DEFAULTS[tagName],
 			...props } as Record<string, HTMLPrimitive>;
 		
 		if (mergedProps['value'] !== undefined) mergedProps['value'] = this.data[name];
+		if (mergedProps['name'] !== undefined) mergedProps['name'] = name;
 		
 		this.children = this.children.concat(labelTag.toString());
 		this.children = this.children.concat(new Tag(tagName, mergedProps, this.data[name]).toString());

@@ -2,8 +2,8 @@
 
 exports[`test html snapshots with different option sets > should create input with class option 1`] = `"<form method="post" action="#"><label for="name">Name</label><input name="name" type="text" value="rob" class="user-input"><label for="job">Job</label><input name="job" type="text" value="hexlet"></form>"`;
 
-exports[`test html snapshots with different option sets > should create input with default options 1`] = `"<form method="post" action="#"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea name="job" cols="20" rows="40">hexlet</textarea></form>"`;
+exports[`test html snapshots with different option sets > should create input with default options 1`] = `"<form method="post" action="#"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea></form>"`;
 
-exports[`test html snapshots with different option sets > should create input with overridden defaults 1`] = `"<form method="post" action="/users"><label for="job">Job</label><textarea name="job" cols="50" rows="50">hexlet</textarea></form>"`;
+exports[`test html snapshots with different option sets > should create input with overridden defaults 1`] = `"<form method="post" action="/users"><label for="job">Job</label><textarea cols="50" rows="50" name="job">hexlet</textarea></form>"`;
 
 exports[`test html snapshots with different option sets > should create inputs and submit with custom caption 1`] = `"<form method="post" action="#"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><input name="job" type="text" value="hexlet"><input type="submit" value="Wow"></form>"`;
